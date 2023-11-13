@@ -1,4 +1,5 @@
 <script setup>
+import { Connection } from "@solana/web3.js";
 import Dashboard from "./Dashboard.vue";
 </script>
 
@@ -6,21 +7,20 @@ import Dashboard from "./Dashboard.vue";
   <v-app class="home">
     <v-main>
       <div class="wallet-style">
-        <button>Acessar</button>
+        <v-btn class="Access-Button" rounded="xl" prepend-icon="mdi-account-circle" @click="access">{{loginButtonContent}}</v-btn>
       </div>
       <v-app-bar flat color="transparent" style="margin-top: 1vh">
         <v-app-bar-title
           ><img class="toolbar-image" src="../assets/logo.png" contain
         /></v-app-bar-title>
       </v-app-bar>
-      <Dashboard />
+      <Dashboard :isConnected="connected" />
       <v-container class="Home-content">
-        <h1 id="home-title">Blockchain,</h1>
-        <h1 id="home-title">IoT,</h1>
-        <h1 id="home-title">Inovação</h1>
-        <p id="home-subtitle">
-          Mantenha o controle dos seus dispositivos de forma segura e
-          transparente.
+        <h1 id="home-title" style="background: rgb(5, 66, 5); width: fit-content; margin-bottom: 3px;">Sua forma</h1>
+        <h1 id="home-title" style="background: rgb(5, 66, 5); width: fit-content; margin-bottom: 3px;">inteligente</h1>
+        <h1 id="home-title" style="background: rgb(5, 66, 5); width: fit-content; margin-bottom: 3px; white-space: nowrap;">de monitoramento</h1>
+        <p id="home-subtitle" style="background: rgb(5, 66, 5); width: fit-content; margin-bottom: 3px;">
+          Mantenha o controle da sua fazendana palma da sua mão.
         </p>
       </v-container>
     </v-main>
@@ -28,8 +28,28 @@ import Dashboard from "./Dashboard.vue";
 </template>
 
 <script>
+
 export default {
   name: "Home",
+
+  data(){
+    return {
+      connected: false,
+      loginButtonContent: "Entrar",
+    }
+  },
+
+ methods: {
+  access() {
+    if(this.connected) {
+      this.connected = false;
+      this.loginButtonContent = "Entrar"
+      return;  
+    }
+    this.connected = true;
+    this.loginButtonContent = "Sair"
+  }
+ }
 };
 </script>
 
@@ -54,6 +74,10 @@ export default {
   padding-right: 5vh;
 }
 
+.Access-Button{
+  color: white;
+  background-color: rgb(5, 66, 5);
+}
 .Home-content {
   position: absolute;
   width: 511px;
@@ -73,24 +97,16 @@ export default {
   font-family: "Inter-Extrabold";
   font-style: bold;
   font-weight: 800;
-  font-size: 80px;
-  line-height: 97px;
-
-  background: radial-gradient(
-    114.63% 155.16% at 4.44% -42.89%,
-    #ff3eb5 0%,
-    #fefdc2 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 60px;
+  line-height: 60px;
+  color: #ffffff;
 }
 
 #home-subtitle {
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 15px;
   line-height: 24px;
   color: #ffffff;
 }

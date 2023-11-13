@@ -18,7 +18,7 @@ import { findActiveAdhesions, findAdhesionsByHub } from "../scripts/mongo";
       <v-alert type="success" v-if="alertSuccess" class="alert">
         Transação concluida!</v-alert
       >
-      <AddHub @updateHubs="updateHubs" />
+      <!-- <AddHub @updateHubs="updateHubs" /> -->
       <v-progress-linear
         v-if="loading"
         color="deep-purple accent-4"
@@ -28,7 +28,7 @@ import { findActiveAdhesions, findAdhesionsByHub } from "../scripts/mongo";
       >
       </v-progress-linear>
       <p v-if="!loading" class="dash-title">Painel de controle</p>
-      <p v-if="!loading" class="dash-hubs">Hubs: {{ hubs.length }}</p>
+      <p v-if="!loading" class="dash-hubs">Animais: {{ hubs.length }}</p>
 
       <v-row v-if="!loading">
         <v-col id="hub-cols" v-for="hub in hubs">
@@ -48,10 +48,11 @@ import { getAllHubs } from "../scripts/solana";
 
 export default {
   name: "Dashboard",
-
+  props: {
+    isConnected: Boolean
+  },
   data() {
     return {
-      isConnected: false,
       alertConnected: false,
       alertDisconnected: false,
       alertSuccess: false,
@@ -63,14 +64,12 @@ export default {
   },
 
   watch: {
-    wallet: {
+    isConnected: {
       handler(connection) {
-        this.isConnected = connection;
         this.alertConnected = connection;
         this.alertDisconnected = !connection;
-        console.log(connection);
       },
-      deep: true,
+      deep: true
     },
     hubs() {
       if (this.hubs.length == 0) {
@@ -82,7 +81,6 @@ export default {
     },
     alertConnected(status) {
       if (status) {
-        console.log("Connected alert: ", status);
         setTimeout(() => {
           this.alertConnected = false;
         }, 5000);
@@ -121,9 +119,9 @@ export default {
   },
 
   created() {
-    findAdhesionsByHub().then((adhesionsByHub) => {
-      this.adhesionsByHub = adhesionsByHub;
-    });
+    // findAdhesionsByHub().then((adhesionsByHub) => {
+    //   this.adhesionsByHub = adhesionsByHub;
+    // });
   },
 };
 </script>
@@ -153,15 +151,7 @@ export default {
   font-weight: 800;
   font-size: 25px;
   line-height: 44px;
-
-  background: radial-gradient(
-    141.6% 247.26% at 4.44% -42.89%,
-    #fe1aa7 0%,
-    #fefdc2 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: rgb(5, 66, 5);
 }
 
 .dash-hubs {
@@ -170,15 +160,7 @@ export default {
   font-weight: 800;
   font-size: 18px;
   line-height: 44px;
-
-  background: radial-gradient(
-    141.6% 247.26% at 4.44% -42.89%,
-    #fe1aa7 0%,
-    #fefdc2 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: rgb(5, 66, 5);
 }
 
 .alert {
