@@ -1,8 +1,8 @@
 <script setup>
 import AddHub from "../components/AddHub.vue";
-import HubCard from "../components/HubCard.vue";
+import AnimalCard from "../components/AnimalCard.vue";
 import HubAdhesionsVue from "../components/HubAdhesions.vue";
-import { findActiveAdhesions, findAdhesionsByHub } from "../scripts/mongo";
+import { findAnimals } from "../scripts/mongo";
 </script>
 
 <template>
@@ -28,15 +28,11 @@ import { findActiveAdhesions, findAdhesionsByHub } from "../scripts/mongo";
       >
       </v-progress-linear>
       <p v-if="!loading" class="dash-title">Painel de controle</p>
-      <p v-if="!loading" class="dash-hubs">Animais: {{ hubs.length }}</p>
+      <p v-if="!loading" class="dash-hubs">Animais: {{ animals.length }}</p>
 
       <v-row v-if="!loading">
-        <v-col id="hub-cols" v-for="hub in hubs">
-          <HubCard
-            :hub="hub"
-            :activePorts="this.adhesionsByHub"
-            @updateHubs="updateHubs"
-          />
+        <v-col id="hub-cols" v-for="animal in animals">
+          <AnimalCard :animal="animal" />
         </v-col>
       </v-row>
     </v-container>
@@ -49,7 +45,7 @@ import { getAllHubs } from "../scripts/solana";
 export default {
   name: "Dashboard",
   props: {
-    isConnected: Boolean
+    isConnected: Boolean,
   },
   data() {
     return {
@@ -58,7 +54,7 @@ export default {
       alertSuccess: false,
       loading: false,
       refresh: 0,
-      hubs: [],
+      animals: [],
       adhesionsByHub: {},
     };
   },
@@ -69,15 +65,17 @@ export default {
         this.alertConnected = connection;
         this.alertDisconnected = !connection;
       },
-      deep: true
+      deep: true,
     },
-    hubs() {
-      if (this.hubs.length == 0) {
-        this.loading = true;
-      }
-      setTimeout(() => {
-        this.loading = false;
-      }, 5000);
+    animals: {
+      handler() {
+        if (this.animals.length == 0) {
+          this.loading = true;
+        }
+        setTimeout(() => {
+          this.loading = false;
+        }, 5000);
+      },
     },
     alertConnected(status) {
       if (status) {
@@ -103,25 +101,21 @@ export default {
   },
 
   methods: {
-    updateHubs() {
-      this.hubs.pop();
-      this.hubs = updatedHubs;
-      findAdhesionsByHub().then((adhesionsByHub) => {
-        this.adhesionsByHub = adhesionsByHub;
-      });
-
-      setTimeout(() => {
-        this.refresh += 1;
-      }, 5000);
-
-      this.alertSuccess = true;
-    },
+    // updateHubs() {
+    //   this.hubs.pop();
+    //   this.hubs = updatedHubs;
+    //   findAdhesionsByHub().then((adhesionsByHub) => {
+    //     this.adhesionsByHub = adhesionsByHub;
+    //   });
+    //   setTimeout(() => {
+    //     this.refresh += 1;
+    //   }, 5000);
+    //   this.alertSuccess = true;
+    // },
   },
 
   created() {
-    // findAdhesionsByHub().then((adhesionsByHub) => {
-    //   this.adhesionsByHub = adhesionsByHub;
-    // });
+    this.animals = findAnimals();
   },
 };
 </script>

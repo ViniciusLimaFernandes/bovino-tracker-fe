@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const url =
-  "https://cors-anywhere.herokuapp.com/https://data.mongodb-api.com/app/data-ilhtg/endpoint/data/v1/action";
+  "https://cors-anywhere.herokuapp.com/https://data.mongodb-api.com/app/data-urews/endpoint/data/v1/action";
 
 const headers = {
   headers: {
@@ -12,10 +12,33 @@ const headers = {
 
 const defultBody = () => {
   return {
-    collection: "adhesions",
-    database: "devices",
-    dataSource: "TCC-Cluster",
+    database: "main",
+    dataSource: "bovino-tracker",
   };
+};
+
+export const findAnimals = () => {
+  const findAnimalURL = `${url}/find`;
+  const filter = {
+    farm_name: "Fazenda_Friboi",
+  };
+  let findBody = defultBody();
+  findBody.filter = filter;
+  findBody.collection = "animals";
+
+  let animals = [];
+
+  console.log(headers);
+
+  axios.post(findAnimalURL, findBody, headers).then((result) => {
+    result.data.documents.map((animal) => {
+      animals.push(animal);
+    });
+  });
+
+  console.log(`animals: ${animals}`);
+
+  return animals;
 };
 
 export const findActiveAdhesions = () => {
