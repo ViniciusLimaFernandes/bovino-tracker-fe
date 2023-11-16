@@ -1,4 +1,5 @@
 import axios from "axios";
+import { uniqueNamesGenerator, names } from "unique-names-generator";
 
 const url =
   "https://cors-anywhere.herokuapp.com/https://data.mongodb-api.com/app/data-urews/endpoint/data/v1/action";
@@ -28,17 +29,68 @@ export const findAnimals = () => {
 
   let animals = [];
 
-  console.log(headers);
-
   axios.post(findAnimalURL, findBody, headers).then((result) => {
     result.data.documents.map((animal) => {
-      animals.push(animal);
+      animals.push(handleAnimal(animal));
     });
   });
 
-  console.log(`animals: ${animals}`);
-
   return animals;
+};
+
+const handleAnimal = (animal) => {
+  let updated = false;
+
+  if (animal.name == null) {
+    animal.name = uniqueNamesGenerator({
+      dictionaries: [names],
+    });
+    updated = true;
+  }
+
+  if (animal.age == null) {
+    animal.age = Math.floor(Math.random() * (22 - 2 + 1) + 2);
+    updated = true;
+  }
+
+  if (animal.breed == null) {
+    var breeds = [
+      "Nelore",
+      "Angus",
+      "Brahman",
+      "Brangus",
+      "Senepol",
+      "Hereford",
+    ];
+    animal.breed = breeds[Math.floor(Math.random() * breeds.length)];
+    updated = true;
+  }
+
+  if (updated) {
+    updateAnimal(animal);
+  }
+
+  return animal;
+};
+
+export const updateAnimal = (animal) => {
+  const updateAnimalURL = `${url}/updateOne`;
+  delete animal._id;
+  const filter = {
+    animal_serial: animal.animal_serial,
+  };
+  const update = {
+    $set: animal,
+  };
+
+  let updateBody = defultBody();
+  updateBody.collection = "animals";
+  updateBody.filter = filter;
+  updateBody.update = update;
+
+  axios.post(updateAnimalURL, updateBody, headers).then((result) => {
+    console.log(`animal ${animal.animal_serial} successfully updated`);
+  });
 };
 
 export const findActiveAdhesions = () => {

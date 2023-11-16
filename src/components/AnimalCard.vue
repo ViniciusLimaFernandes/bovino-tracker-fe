@@ -7,7 +7,7 @@ import UseHubForm from "../components/UseHubForm.vue";
     <img id="hub-image" src="../assets/boi-profile.png" cover />
 
     <v-card-item>
-      <v-card-title> BOI BUMBA </v-card-title>
+      <v-card-title>{{animal.name}}</v-card-title>
 
       <v-card-subtitle>
         <span class="mr-1">#{{ animal.animal_serial }}</span>
@@ -27,7 +27,7 @@ import UseHubForm from "../components/UseHubForm.vue";
 
     <v-divider class="mx-4 mb-1"></v-divider>
 
-    <v-card-title style="font-size: 16px">informacoes</v-card-title>
+    <v-card-title style="font-size: 14px">🔎 Informacoes</v-card-title>
     
   </v-card>
 </template>
