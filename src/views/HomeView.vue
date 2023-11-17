@@ -20,7 +20,7 @@ import Dashboard from "./Dashboard.vue";
         <h1 id="home-title" style="background: rgb(5, 66, 5); width: fit-content; margin-bottom: 3px;">inteligente</h1>
         <h1 id="home-title" style="background: rgb(5, 66, 5); width: fit-content; margin-bottom: 3px; white-space: nowrap;">de monitoramento</h1>
         <p id="home-subtitle" style="background: rgb(5, 66, 5); width: fit-content; margin-bottom: 3px;">
-          Mantenha o controle da sua fazendana palma da sua mão.
+          Mantenha o controle da sua fazenda palma da sua mão.
         </p>
       </v-container>
     </v-main>
