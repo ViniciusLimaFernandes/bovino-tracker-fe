@@ -28,7 +28,11 @@ import { findAnimals } from "../scripts/mongo";
       >
       </v-progress-linear>
       <p v-if="!loading" class="dash-title">Painel de controle</p>
-      <p v-if="!loading" class="dash-hubs">Animais: {{ animals.length }}</p>
+      <p v-if="!loading" class="dash-hubs">Animais: {{ animals.length }} 
+        <v-btn size="small"
+        @click="openInNewTab(`https://monitoramentobovino.grafana.net/d/fd44a297-4832-4409-96b2-03c87376769d/dados-estado-boi?orgId=1&var-Fazenda=Fazenda_Friboi&var-Node_serial=11568354&from=now-7d&to=now`)"
+        >📊 Dashboard Geral</v-btn>
+      </p>
 
       <v-row v-if="!loading">
         <v-col id="hub-cols" v-for="animal in animals">
@@ -101,17 +105,9 @@ export default {
   },
 
   methods: {
-    // updateHubs() {
-    //   this.hubs.pop();
-    //   this.hubs = updatedHubs;
-    //   findAdhesionsByHub().then((adhesionsByHub) => {
-    //     this.adhesionsByHub = adhesionsByHub;
-    //   });
-    //   setTimeout(() => {
-    //     this.refresh += 1;
-    //   }, 5000);
-    //   this.alertSuccess = true;
-    // },
+    openInNewTab(url) {
+      window.open(url, '_blank', 'noreferrer');
+    },
   },
 
   created() {

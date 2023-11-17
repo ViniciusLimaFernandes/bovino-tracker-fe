@@ -26,20 +26,23 @@ import UseHubForm from "../components/UseHubForm.vue";
     </v-card-text>
 
     <v-divider class="mx-4 mb-1"></v-divider>
-
-    <v-card-title style="font-size: 14px">🔎 Informacoes</v-card-title>
+    <v-btn 
+    @click="openInNewTab(`https://monitoramentobovino.grafana.net/d/fd44a297-4832-4409-96b2-03c87376769d/dados-estado-boi?orgId=1&var-Fazenda=${animal.farm_name}&var-Node_serial=${animal.animal_serial}&from=now-24h&to=now`)"
+    style="font-size: 14px;" variant="text">🔎 Informacoes</v-btn>
     
   </v-card>
 </template>
 
 <script>
-// import { useWallet } from "solana-wallets-vue";
-// import { withdraw } from "../scripts/solana";
-
 export default {
   name: "AnimalCard",
   props: {
     animal: Object,
+  },
+  methods: {
+    openInNewTab(url) {
+      window.open(url, '_blank', 'noreferrer');
+    },
   },
 };
 </script>
