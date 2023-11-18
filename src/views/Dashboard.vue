@@ -18,7 +18,6 @@ import { findAnimals } from "../scripts/mongo";
       <v-alert type="success" v-if="alertSuccess" class="alert">
         Transação concluida!</v-alert
       >
-      <!-- <AddHub @updateHubs="updateHubs" /> -->
       <v-progress-linear
         v-if="loading"
         color="deep-purple accent-4"
@@ -30,8 +29,8 @@ import { findAnimals } from "../scripts/mongo";
       <p v-if="!loading" class="dash-title">Painel de controle</p>
       <p v-if="!loading" class="dash-hubs">Animais: {{ animals.length }} 
         <v-btn size="small"
-        @click="openInNewTab(`https://monitoramentobovino.grafana.net/d/fd44a297-4832-4409-96b2-03c87376769d/dados-estado-boi?orgId=1&var-Fazenda=Fazenda_Friboi&var-Node_serial=11568354&from=now-7d&to=now`)"
-        >📊 Dashboard Geral</v-btn>
+        @click="openInNewTab(`https://monitoramentobovino.grafana.net/d/d18ce596-7fb9-4504-9013-5ebcb34e23e6/dados-gerais?orgId=1&var-Fazenda=${this.user.farm_name}&from=now-7d&to=now`)"
+        >📊 Monitoramento do rebanho</v-btn>
       </p>
 
       <v-row v-if="!loading">
@@ -50,6 +49,7 @@ export default {
   name: "Dashboard",
   props: {
     isConnected: Boolean,
+    user: Object,
   },
   data() {
     return {
@@ -59,7 +59,6 @@ export default {
       loading: false,
       refresh: 0,
       animals: [],
-      adhesionsByHub: {},
     };
   },
 
@@ -83,6 +82,7 @@ export default {
     },
     alertConnected(status) {
       if (status) {
+        this.animals = findAnimals(this.user.farm_name);
         setTimeout(() => {
           this.alertConnected = false;
         }, 5000);
@@ -90,6 +90,7 @@ export default {
     },
     alertDisconnected(status) {
       if (status) {
+        this.animals = [];
         setTimeout(() => {
           this.alertDisconnected = false;
         }, 5000);
@@ -111,7 +112,7 @@ export default {
   },
 
   created() {
-    this.animals = findAnimals();
+    this.animals = findAnimals(this.user.farm_name);
   },
 };
 </script>

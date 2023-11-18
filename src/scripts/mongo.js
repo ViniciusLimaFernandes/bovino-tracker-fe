@@ -18,10 +18,25 @@ const defultBody = () => {
   };
 };
 
-export const findAnimals = () => {
+export const findUser = async (userEmail, userPassword) => {
+  const userURL = `${url}/findOne`;
+  const filter = {
+    email: userEmail,
+    password: String(userPassword),
+  };
+  let findBody = defultBody();
+  findBody.filter = filter;
+  findBody.collection = "users";
+
+  let result = await axios.post(userURL, findBody, headers);
+
+  return result.data.document;
+};
+
+export const findAnimals = (farmName) => {
   const findAnimalURL = `${url}/find`;
   const filter = {
-    farm_name: "Fazenda_Friboi",
+    farm_name: farmName,
   };
   let findBody = defultBody();
   findBody.filter = filter;

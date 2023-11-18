@@ -1,26 +1,28 @@
 <script setup>
 import { Connection } from "@solana/web3.js";
 import Dashboard from "./Dashboard.vue";
+import LoginForm from "../components/LoginForm.vue";
 </script>
 
 <template>
   <v-app class="home">
     <v-main>
       <div class="wallet-style">
-        <v-btn class="Access-Button" rounded="xl" prepend-icon="mdi-account-circle" @click="access">{{loginButtonContent}}</v-btn>
+        <v-btn class="Access-Button" rounded="xl" prepend-icon="mdi-account-circle" @click="accessClick">{{loginButtonContent}}</v-btn>
       </div>
       <v-app-bar flat color="transparent" style="margin-top: 1vh">
         <v-app-bar-title
           ><img class="toolbar-image" src="../assets/logo.png" contain
         /></v-app-bar-title>
       </v-app-bar>
-      <Dashboard :isConnected="connected" />
+      <LoginForm :dialog="this.showLoginForm" @closeDialog="this.showLoginForm=false" @loggedIn="access" @loggedUser="handleLoggedUser"/>
+      <Dashboard :isConnected="connected" :user="this.user" />
       <v-container class="Home-content">
         <h1 id="home-title" style="background: rgb(5, 66, 5); width: fit-content; margin-bottom: 3px;">Sua forma</h1>
         <h1 id="home-title" style="background: rgb(5, 66, 5); width: fit-content; margin-bottom: 3px;">inteligente</h1>
         <h1 id="home-title" style="background: rgb(5, 66, 5); width: fit-content; margin-bottom: 3px; white-space: nowrap;">de monitoramento</h1>
         <p id="home-subtitle" style="background: rgb(5, 66, 5); width: fit-content; margin-bottom: 3px;">
-          Mantenha o controle da sua fazenda palma da sua mão.
+          Mantenha o controle da sua fazenda na palma da sua mão.
         </p>
       </v-container>
     </v-main>
@@ -36,10 +38,20 @@ export default {
     return {
       connected: false,
       loginButtonContent: "Entrar",
+      showLoginForm: false,
+      user: {},
     }
   },
 
  methods: {
+  accessClick() {
+    if (!this.connected) {
+      this.showLoginForm = true;
+      return;
+    }
+    this.connected = false;
+    this.loginButtonContent = "Entrar"
+  },
   access() {
     if(this.connected) {
       this.connected = false;
@@ -48,6 +60,10 @@ export default {
     }
     this.connected = true;
     this.loginButtonContent = "Sair"
+    this.showLoginForm = false;
+  },
+  handleLoggedUser(user){
+    this.user = user;
   }
  }
 };
