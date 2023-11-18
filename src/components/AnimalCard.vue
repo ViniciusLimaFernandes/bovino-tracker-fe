@@ -1,13 +1,15 @@
 <script setup>
-import UseHubForm from "../components/UseHubForm.vue";
+import EditAnimal from './EditAnimal.vue';
 </script>
 
 <template>
+  <EditAnimal :animal="this.animal" :dialog="this.showEditForm" @closeDialog="this.showEditForm=false" @updatePage="updateAllAnimals"/>
   <v-card class="card">
     <img id="hub-image" src="../assets/boi-profile.png" cover />
-
     <v-card-item>
-      <v-card-title>{{animal.name}}</v-card-title>
+      <v-card-title>{{animal.name}} 
+        <v-btn size="x-small" color="green" @click="editAnimal">editar</v-btn>
+      </v-card-title>
 
       <v-card-subtitle>
         <span class="mr-1">#{{ animal.animal_serial }}</span>
@@ -18,7 +20,7 @@ import UseHubForm from "../components/UseHubForm.vue";
 
     <v-card-text>
       <v-row align="center" style="margin-bottom: 10px;" class="mx-0">
-        ⏳ Idade: {{animal.age}} anos
+        ⏳ Idade: {{animal.age}} meses
       </v-row>
       <v-row align="center" class="mx-0">
         🐂 Raça: {{animal.breed}}
@@ -36,6 +38,12 @@ import UseHubForm from "../components/UseHubForm.vue";
 <script>
 export default {
   name: "AnimalCard",
+  emits: ["updatePage"],
+  data() {
+    return {
+      showEditForm: false,
+    }
+  },
   props: {
     animal: Object,
   },
@@ -43,6 +51,12 @@ export default {
     openInNewTab(url) {
       window.open(url, '_blank', 'noreferrer');
     },
+    editAnimal(){
+      this.showEditForm=true;
+    },
+    updateAllAnimals(){
+      this.$emit("updatePage")
+    }
   },
 };
 </script>

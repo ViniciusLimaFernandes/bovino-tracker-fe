@@ -10,6 +10,9 @@ import { findAnimals } from "../scripts/mongo";
   <v-alert type="error" v-if="alertDisconnected" class="alert">
     Desconectado</v-alert
   >
+  <v-alert type="success" v-if="animalEdit" class="alert">
+    Dados atualizados com sucesso!
+  </v-alert>
   <v-app v-if="isConnected" :key="refresh" class="dash-app">
     <v-container class="dash-container">
       <v-alert type="success" v-if="alertConnected" class="alert">
@@ -35,7 +38,7 @@ import { findAnimals } from "../scripts/mongo";
 
       <v-row v-if="!loading">
         <v-col id="hub-cols" v-for="animal in animals">
-          <AnimalCard :animal="animal" />
+          <AnimalCard :animal="animal" @updatePage="updateAllAnimals"/>
         </v-col>
       </v-row>
     </v-container>
@@ -57,6 +60,7 @@ export default {
       alertDisconnected: false,
       alertSuccess: false,
       loading: false,
+      animalEdit: false,
       refresh: 0,
       animals: [],
     };
@@ -69,6 +73,13 @@ export default {
         this.alertDisconnected = !connection;
       },
       deep: true,
+    },
+    animalEdit: {
+      handler() {
+        setTimeout(() => {
+          this.successEdit = false;
+        }, 3000);
+      },
     },
     animals: {
       handler() {
@@ -109,6 +120,12 @@ export default {
     openInNewTab(url) {
       window.open(url, '_blank', 'noreferrer');
     },
+    updateAllAnimals(){
+      this.animals.pop();
+      let updatedAnimals = findAnimals(this.user.farm_name)
+      this.animals = updatedAnimals;
+      this.animalEdit = true;
+    }
   },
 
   created() {
