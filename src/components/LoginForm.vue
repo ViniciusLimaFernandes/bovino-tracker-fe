@@ -21,7 +21,7 @@
                   variant="underlined"
                   label="Email"
                   hint="Seu email cadastrado"
-                  v-model="this.email"
+                  v-model="email"
                   :rules="emailRules"
                   required
                 ></v-text-field>
@@ -34,7 +34,7 @@
                   variant="underlined"
                   label="Senha"
                   hint="Sua senha"
-                  v-model="this.password"
+                  v-model="password"
                   :rules="passwordRules"
                   required
                 ></v-text-field>
@@ -46,7 +46,7 @@
             <v-divider></v-divider>
             <v-spacer></v-spacer>
             <v-btn color="primary" text @click="closeDialog"> fechar </v-btn>
-            <v-btn color="primary" :disabled="!this.valid" text @click="login">
+            <v-btn color="primary" :disabled="!valid" text @click="login">
               entrar
             </v-btn>
           </v-card-actions>
