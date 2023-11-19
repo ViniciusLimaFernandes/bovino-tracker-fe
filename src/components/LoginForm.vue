@@ -17,7 +17,7 @@
           <v-form ref="form" lazy-validation>
             <v-row style="margin-top: 3px">
               <v-col cols="1" sm="11">
-                <v-text-field
+                <v-text-field ref="email"
                   variant="underlined"
                   label="Email"
                   hint="Seu email cadastrado"
@@ -29,7 +29,7 @@
             </v-row>
             <v-row>
               <v-col cols="1" sm="11">
-                <v-text-field
+                <v-text-field ref="password"
                   type="password"
                   variant="underlined"
                   label="Senha"
