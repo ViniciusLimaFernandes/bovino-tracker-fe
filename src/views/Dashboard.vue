@@ -35,7 +35,7 @@ import { findAnimals, findAnimalsAsync } from "../scripts/mongo";
           size="small"
           @click="
             openInNewTab(
-              `https://monitoramentobovino.grafana.net/d/d18ce596-7fb9-4504-9013-5ebcb34e23e6/dados-gerais?orgId=1&var-Fazenda=${user.farm_name}&from=now-7d&to=now`
+              `https://monitoramentobovino.grafana.net/d/d18ce596-7fb9-4504-9013-5ebcb34e23e6/dados-gerais?orgId=1&var-Fazenda=${user.farm_name}&from=now-24h&to=now`
             )
           "
           >📊 Monitoramento do rebanho</v-btn
@@ -78,13 +78,6 @@ export default {
       },
       deep: true,
     },
-    animalEdit: {
-      handler() {
-        setTimeout(() => {
-          this.successEdit = false;
-        }, 3000);
-      },
-    },
     animals: {
       handler() {
         if (this.animals.length == 0) {
@@ -126,6 +119,10 @@ export default {
     },
     updateAllAnimals(){
       this.$forceUpdate();
+      this.animalEdit=true;
+      setTimeout(() => {
+          this.animalEdit = false;
+        }, 3000);
     }
   },
   created() {
