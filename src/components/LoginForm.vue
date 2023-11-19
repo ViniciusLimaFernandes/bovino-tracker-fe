@@ -14,7 +14,7 @@
             Acesse a sua fazenda
           </v-card-title>
           <v-divider />
-          <v-form ref="form" v-model="valid" lazy-validation>
+          <v-form ref="form" lazy-validation>
             <v-row style="margin-top: 3px">
               <v-col cols="1" sm="11">
                 <v-text-field
