@@ -62,11 +62,9 @@
   </v-dialog>
 </template>
 
-<script setup>
-import { updateAnimal } from "../scripts/mongo.js";
-</script>
-
 <script>
+import { updateAnimal } from "../scripts/mongo.js";
+
 export default {
   name: "EditAnimal",
   emits: ["closeDialog", "updatePage"],
@@ -98,6 +96,7 @@ export default {
         this.successEdit = true;
         this.$refs.form.reset();
         this.$emit("updatePage");
+        this.$emit("closeDialog");
     },
     closeDialog() {
       this.$refs.form.reset();

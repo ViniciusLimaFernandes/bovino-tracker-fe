@@ -1,8 +1,7 @@
 <script setup>
-import AddHub from "../components/AddHub.vue";
 import AnimalCard from "../components/AnimalCard.vue";
 import HubAdhesionsVue from "../components/HubAdhesions.vue";
-import { findAnimals } from "../scripts/mongo";
+import { findAnimals, findAnimalsAsync } from "../scripts/mongo";
 </script>
 
 <template>
@@ -30,15 +29,22 @@ import { findAnimals } from "../scripts/mongo";
       >
       </v-progress-linear>
       <p v-if="!loading" class="dash-title">Painel de controle</p>
-      <p v-if="!loading" class="dash-hubs">Animais: {{ animals.length }} 
-        <v-btn size="small"
-        @click="openInNewTab(`https://monitoramentobovino.grafana.net/d/d18ce596-7fb9-4504-9013-5ebcb34e23e6/dados-gerais?orgId=1&var-Fazenda=${user.farm_name}&from=now-7d&to=now`)"
-        >📊 Monitoramento do rebanho</v-btn>
+      <p v-if="!loading" class="dash-hubs">
+        Animais: {{ animals.length }}
+        <v-btn
+          size="small"
+          @click="
+            openInNewTab(
+              `https://monitoramentobovino.grafana.net/d/d18ce596-7fb9-4504-9013-5ebcb34e23e6/dados-gerais?orgId=1&var-Fazenda=${user.farm_name}&from=now-7d&to=now`
+            )
+          "
+          >📊 Monitoramento do rebanho</v-btn
+        >
       </p>
 
       <v-row v-if="!loading">
         <v-col id="hub-cols" v-for="animal in animals">
-          <AnimalCard :animal="animal" @updatePage="updateAllAnimals"/>
+          <AnimalCard :animal="animal" @updatePage="updateAllAnimals" />
         </v-col>
       </v-row>
     </v-container>
@@ -116,16 +122,12 @@ export default {
 
   methods: {
     openInNewTab(url) {
-      window.open(url, '_blank', 'noreferrer');
+      window.open(url, "_blank", "noreferrer");
     },
     updateAllAnimals(){
-      this.animals.pop();
-      let updatedAnimals = findAnimals(this.user.farm_name)
-      this.animals = updatedAnimals;
-      this.animalEdit = true;
+      this.$forceUpdate();
     }
   },
-
   created() {
     this.animals = findAnimals(this.user.farm_name);
   },

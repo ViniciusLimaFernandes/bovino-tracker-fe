@@ -33,6 +33,20 @@ export const findUser = async (userEmail, userPassword) => {
   return result.data.document;
 };
 
+export const findAnimalsAsync = async (farmName) => {
+  const findAnimalURL = `${url}/find`;
+  const filter = {
+    farm_name: farmName,
+  };
+  let findBody = defultBody();
+  findBody.filter = filter;
+  findBody.collection = "animals";
+
+  let response = await axios.post(findAnimalURL, findBody, headers);
+
+  return response.data.documents;
+};
+
 export const findAnimals = (farmName) => {
   const findAnimalURL = `${url}/find`;
   const filter = {
