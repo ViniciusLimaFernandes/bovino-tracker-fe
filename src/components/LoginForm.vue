@@ -17,11 +17,11 @@
           <v-form ref="form" lazy-validation>
             <v-row style="margin-top: 3px">
               <v-col cols="1" sm="11">
-                <v-text-field ref="email"
+                <v-text-field
                   variant="underlined"
                   label="Email"
                   hint="Seu email cadastrado"
-                  v-model="email"
+                  v-model="userEmail"
                   :rules="emailRules"
                   required
                 ></v-text-field>
@@ -29,12 +29,12 @@
             </v-row>
             <v-row>
               <v-col cols="1" sm="11">
-                <v-text-field ref="password"
+                <v-text-field
                   type="password"
                   variant="underlined"
                   label="Senha"
                   hint="Sua senha"
-                  v-model="password"
+                  v-model="userPassword"
                   :rules="passwordRules"
                   required
                 ></v-text-field>
@@ -68,8 +68,8 @@ export default {
   data() {
     return {
       valid: true,
-      email: "",
-      password: "",
+      userEmail: "",
+      userPassword: "",
       userData: {},
       successfullyAuth: false,
       failedAuth: false,
@@ -91,9 +91,9 @@ export default {
       this.$refs.form.validate();
 
       try {
-        const pass = sha256(this.password);
+        const pass = sha256(this.userPassword);
 
-        findUser(this.email, pass).then((user) => {
+        findUser(this.userEmail, pass).then((user) => {
           if (user == null || user.active == false) {
             console.log("Auth failed");
             this.failedAuth = true;
