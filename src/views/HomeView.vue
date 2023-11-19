@@ -16,7 +16,7 @@ import LoginForm from "../components/LoginForm.vue";
         /></v-app-bar-title>
       </v-app-bar>
       <LoginForm :dialog="showLoginForm" @closeDialog="showLoginForm=false" @loggedIn="access" @loggedUser="handleLoggedUser"/>
-      <Dashboard :isConnected="connected" :user="this.user" />
+      <Dashboard :isConnected="connected" :user="user" />
       <v-container class="Home-content">
         <h1 id="home-title" style="background: rgb(5, 66, 5); width: fit-content; margin-bottom: 3px;">Sua forma</h1>
         <h1 id="home-title" style="background: rgb(5, 66, 5); width: fit-content; margin-bottom: 3px;">inteligente</h1>
