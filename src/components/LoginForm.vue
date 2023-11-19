@@ -87,6 +87,7 @@ export default {
   methods: {
     login() {
       this.$refs.form.validate();
+      this.$emit("closeDialog");
 
       try {
         const pass = sha256(this.userPassword);
@@ -102,7 +103,6 @@ export default {
           this.successfullyAuth = true;
           this.$emit("loggedIn");
           this.$emit("loggedUser", this.userData);
-          this.$refs.form.reset();
         });
       } catch (error) {
         this.failedAuth = true;
