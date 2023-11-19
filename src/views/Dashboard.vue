@@ -32,7 +32,7 @@ import { findAnimals } from "../scripts/mongo";
       <p v-if="!loading" class="dash-title">Painel de controle</p>
       <p v-if="!loading" class="dash-hubs">Animais: {{ animals.length }} 
         <v-btn size="small"
-        @click="openInNewTab(`https://monitoramentobovino.grafana.net/d/d18ce596-7fb9-4504-9013-5ebcb34e23e6/dados-gerais?orgId=1&var-Fazenda=${this.user.farm_name}&from=now-7d&to=now`)"
+        @click="openInNewTab(`https://monitoramentobovino.grafana.net/d/d18ce596-7fb9-4504-9013-5ebcb34e23e6/dados-gerais?orgId=1&var-Fazenda=${user.farm_name}&from=now-7d&to=now`)"
         >📊 Monitoramento do rebanho</v-btn>
       </p>
 
