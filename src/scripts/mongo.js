@@ -3,6 +3,8 @@ import { uniqueNamesGenerator, names } from "unique-names-generator";
 
 const url =
   "https://protected-gorge-58917-c78711b4456a.herokuapp.com/https://data.mongodb-api.com/app/data-urews/endpoint/data/v1/action";
+//TODO: CHANGE URL
+// const url =  "https://cors-anywhere.herokuapp.com/https://data.mongodb-api.com/app/data-urews/endpoint/data/v1/action";
 
 const headers = {
   headers: {
