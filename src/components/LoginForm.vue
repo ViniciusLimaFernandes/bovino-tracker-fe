@@ -56,12 +56,10 @@
   </v-dialog>
 </template>
 
-<script setup>
+<script>
 import sha256 from "crypto-js/sha256";
 import { findUser } from "../scripts/mongo.js";
-</script>
 
-<script>
 export default {
   name: "LoginForm",
   emits: ["closeDialog", "loggedIn", "loggedUser"],
