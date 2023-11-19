@@ -46,8 +46,6 @@ import { findAnimals } from "../scripts/mongo";
 </template>
 
 <script>
-import { getAllHubs } from "../scripts/solana";
-
 export default {
   name: "Dashboard",
   props: {
