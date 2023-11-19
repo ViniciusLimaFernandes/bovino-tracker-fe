@@ -3,7 +3,7 @@ import EditAnimal from './EditAnimal.vue';
 </script>
 
 <template>
-  <EditAnimal :animal="animal" :dialog="this.showEditForm" @closeDialog="this.showEditForm=false" @updatePage="updateAllAnimals"/>
+  <EditAnimal :animal="animal" :dialog="showEditForm" @closeDialog="showEditForm=false" @updatePage="updateAllAnimals"/>
   <v-card class="card">
     <img id="hub-image" src="../assets/boi-profile.png" cover />
     <v-card-item>
